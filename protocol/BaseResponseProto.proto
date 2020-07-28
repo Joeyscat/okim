@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package protocol;
+
+option java_package = "fun.oook.okim.common.protocol";
+option java_outer_classname = "OKIMResponseProto";
+
+message CIMResProtocol {
+  int64 responseId = 2;
+  string resMsg = 1;
+  int32 type = 3;
+}

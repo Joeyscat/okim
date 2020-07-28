@@ -1,0 +1,3 @@
+rootProject.name = 'okim'
+
+include "okim-common", "okim-route-api", "okim-forward-route", "okim-client", "okim-server", "okim-server-api"

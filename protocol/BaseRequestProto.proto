@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package protocol;
+
+option java_package = "fun.oook.okim.common.protocol";
+option java_outer_classname = "OKMRequestProto";
+
+message CIMReqProtocol {
+  int64 requestId = 2;
+  string reqMsg = 1;
+  int32 type = 3;
+
+}
+

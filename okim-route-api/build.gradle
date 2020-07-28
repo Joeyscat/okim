@@ -1,0 +1,16 @@
+plugins {
+    id 'java'
+}
+
+dependencies {
+    implementation(project(':okim-common')) {
+        exclude group: 'log4j', module: 'log4j'
+    }
+
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+}
+
+test {
+    useJUnitPlatform()
+}

@@ -1,0 +1,30 @@
+plugins {
+    id 'org.springframework.boot' version '2.3.2.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+    id 'java'
+}
+
+dependencies {
+    implementation(project(':okim-common')) {
+        exclude group: 'log4j', module: 'log4j'
+    }
+    implementation project(':okim-route-api')
+    implementation project(':okim-server-api')
+
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-configuration-processor'
+
+    implementation 'io.springfox:springfox-swagger2'
+    implementation 'io.springfox:springfox-swagger-ui'
+    implementation 'ch.qos.logback:logback-classic'
+    implementation 'junit:junit'
+    implementation 'com.alibaba:fastjson'
+    implementation 'com.google.guava:guava'
+}
+
+test {
+    useJUnitPlatform()
+}
