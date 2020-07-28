@@ -1,6 +1,7 @@
 package fun.oook.okim.server.config;
 
-import fun.oook.okim.server.endpoint.CustomEndpoint;
+//import fun.oook.okim.server.endpoint.CustomEndpoint;
+import fun.oook.okim.server.endpoint.RelaEndpoint;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,9 +20,14 @@ public class EndPointConfig {
     @Value("${monitor.channel.map.key}")
     private String channelMap;
 
+//    @Bean
+//    public CustomEndpoint buildEndPoint(){
+//        CustomEndpoint customEndpoint = new CustomEndpoint(channelMap) ;
+//        return customEndpoint ;
+//    }
+
     @Bean
-    public CustomEndpoint buildEndPoint(){
-        CustomEndpoint customEndpoint = new CustomEndpoint(channelMap) ;
-        return customEndpoint ;
+    public RelaEndpoint relaEndpoint(){
+        return new RelaEndpoint();
     }
 }

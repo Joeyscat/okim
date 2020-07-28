@@ -121,10 +121,12 @@ public class RouteRequestImpl implements RouteRequest {
         } catch (Exception e) {
             LOGGER.error("exception", e);
         } finally {
-            response.body().close();
+            if (response != null) {
+                response.body().close();
+            }
         }
 
-        return cimServerResVO.getDataBody();
+        return cimServerResVO != null ? cimServerResVO.getDataBody() : null;
     }
 
     @Override

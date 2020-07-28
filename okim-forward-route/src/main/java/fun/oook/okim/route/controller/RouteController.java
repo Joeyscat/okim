@@ -64,7 +64,7 @@ public class RouteController implements RouteApi {
     @ResponseBody()
     @Override
     public BaseResponse<NULLBody> groupRoute(@RequestBody ChatReqVO groupReqVO) throws Exception {
-        BaseResponse<NULLBody> res = new BaseResponse();
+        BaseResponse<NULLBody> res = new BaseResponse<>();
 
         LOGGER.info("msg=[{}]", groupReqVO.toString());
 
@@ -103,7 +103,7 @@ public class RouteController implements RouteApi {
     @ResponseBody()
     @Override
     public BaseResponse<NULLBody> p2pRoute(@RequestBody P2PReqVO p2pRequest) throws Exception {
-        BaseResponse<NULLBody> res = new BaseResponse();
+        BaseResponse<NULLBody> res = new BaseResponse<>();
 
         try {
             //获取接收消息用户的路由信息
@@ -129,7 +129,7 @@ public class RouteController implements RouteApi {
     @ResponseBody()
     @Override
     public BaseResponse<NULLBody> offLine(@RequestBody ChatReqVO groupReqVO) throws Exception {
-        BaseResponse<NULLBody> res = new BaseResponse();
+        BaseResponse<NULLBody> res = new BaseResponse<>();
 
         CIMUserInfo cimUserInfo = userInfoCacheService.loadUserInfoByUserId(groupReqVO.getUserId());
 
@@ -151,7 +151,7 @@ public class RouteController implements RouteApi {
     @ResponseBody()
     @Override
     public BaseResponse<CIMServerResVO> login(@RequestBody LoginReqVO loginReqVO) throws Exception {
-        BaseResponse<CIMServerResVO> res = new BaseResponse();
+        BaseResponse<CIMServerResVO> res = new BaseResponse<>();
 
         // check server available
         String server = routeHandle.routeServer(serverCache.getServerList(),String.valueOf(loginReqVO.getUserId()));
@@ -187,7 +187,7 @@ public class RouteController implements RouteApi {
     @ResponseBody()
     @Override
     public BaseResponse<RegisterInfoResVO> registerAccount(@RequestBody RegisterInfoReqVO registerInfoReqVO) throws Exception {
-        BaseResponse<RegisterInfoResVO> res = new BaseResponse();
+        BaseResponse<RegisterInfoResVO> res = new BaseResponse<>();
 
         long userId = System.currentTimeMillis();
         RegisterInfoResVO info = new RegisterInfoResVO(userId, registerInfoReqVO.getUserName());
@@ -209,7 +209,7 @@ public class RouteController implements RouteApi {
     @ResponseBody()
     @Override
     public BaseResponse<Set<CIMUserInfo>> onlineUser() throws Exception {
-        BaseResponse<Set<CIMUserInfo>> res = new BaseResponse();
+        BaseResponse<Set<CIMUserInfo>> res = new BaseResponse<>();
 
         Set<CIMUserInfo> cimUserInfos = userInfoCacheService.onlineUser();
         res.setDataBody(cimUserInfos) ;
