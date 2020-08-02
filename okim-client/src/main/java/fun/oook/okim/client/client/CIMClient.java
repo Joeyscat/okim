@@ -87,8 +87,6 @@ public class CIMClient {
 
         //向服务端注册
         loginCIMServer();
-
-
     }
 
     /**
@@ -97,30 +95,27 @@ public class CIMClient {
      * @param cimServer
      * @throws Exception
      */
-    private void startClient(CIMServerResVO.ServerInfo cimServer) {
+    private void startClient(CIMServerResVO.ServerInfo cimServer) throws Exception {
         Bootstrap bootstrap = new Bootstrap();
         bootstrap.group(group)
                 .channel(NioSocketChannel.class)
-                .handler(new CIMClientHandleInitializer())
-        ;
+                .handler(new CIMClientHandleInitializer());
 
-        ChannelFuture future = null;
-        try {
-            future = bootstrap.connect(cimServer.getIp(), cimServer.getCimServerPort()).sync();
-        } catch (Exception e) {
+        ChannelFuture future = bootstrap.connect(cimServer.getIp(), cimServer.getCimServerPort()).sync();
+
+        if (future != null && future.isSuccess()) {
+            echoService.echo("Start okim client success!");
+            LOGGER.info("启动 okim client 成功");
+            channel = (SocketChannel) future.channel();
+        } else {
             errorCount++;
 
             if (errorCount >= configuration.getErrorCount()) {
                 LOGGER.error("连接失败次数达到上限[{}]次", errorCount);
                 msgHandle.shutdown();
             }
-            LOGGER.error("Connect fail!", e);
+            LOGGER.error("Connect fail!");
         }
-        if (future.isSuccess()) {
-            echoService.echo("Start okim client success!");
-            LOGGER.info("启动 okim client 成功");
-        }
-        channel = (SocketChannel) future.channel();
     }
 
     /**
@@ -129,26 +124,26 @@ public class CIMClient {
      * @return 路由服务器信息
      * @throws Exception
      */
-    private CIMServerResVO.ServerInfo userLogin() {
+    private CIMServerResVO.ServerInfo userLogin() throws Exception {
         LoginReqVO loginReqVO = new LoginReqVO(userId, userName);
-        CIMServerResVO.ServerInfo cimServer = null;
-        try {
-            cimServer = routeRequest.getCIMServer(loginReqVO);
+        CIMServerResVO.ServerInfo cimServer = routeRequest.getCIMServer(loginReqVO);
 
+        if (cimServer != null) {
             //保存系统信息
             clientInfo.saveServiceInfo(cimServer.getIp() + ":" + cimServer.getCimServerPort())
                     .saveUserInfo(userId, userName);
 
             LOGGER.info("cimServer=[{}]", cimServer.toString());
-        } catch (Exception e) {
+        } else {
             errorCount++;
 
             if (errorCount >= configuration.getErrorCount()) {
                 echoService.echo("The maximum number of reconnections has been reached[{}]times, close okim client!", errorCount);
                 msgHandle.shutdown();
             }
-            LOGGER.error("login fail", e);
+            LOGGER.error("login fail");
         }
+
         return cimServer;
     }
 
